@@ -1,14 +1,11 @@
 using UnityEngine;
 public class Controller : MonoBehaviour
 {
-    [Header("Movement")]
     public float walkSpeed = 6f;
-    [Header("Look")]
     public float lookSpeed = 2f;
     private CharacterController controller;
     private float xRotation = 0f;
     private Camera playerCam;
-    private float currentPush = 0f;
     void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -19,7 +16,6 @@ public class Controller : MonoBehaviour
     {
         HandleMovement();
         HandleMouseLook();
-        ApplyParanoiaPush();
     }
     void HandleMovement()
     {
@@ -37,17 +33,5 @@ public class Controller : MonoBehaviour
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -85f, 85f);
         playerCam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
-    }
-    public void AddParanoiaPush(float amount)
-    {
-        currentPush = Mathf.Max(currentPush, amount);
-    }
-    void ApplyParanoiaPush()
-    {
-        if (currentPush > 0.1f)
-        {
-            controller.Move(-transform.forward * currentPush * Time.deltaTime);
-            currentPush *= 0.92f;
-        }
     }
 }

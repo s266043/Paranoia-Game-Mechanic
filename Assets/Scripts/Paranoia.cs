@@ -1,45 +1,34 @@
 ﻿using UnityEngine;
 public class Paranoia : MonoBehaviour
 {
-    [Header("References")]
     public Transform player;
     public Manager hrManager;
-    [Header("Spawn & Chase")]
-    public Transform[] waypoints;
+    public Transform[] spawnpoints;
     public float moveSpeed = 5f;
     public float groundY = 11f;
-    [Header("Audio")]
     public AudioSource audioSource;
-    public AudioClip paranoiaSFX;
-    public float sfxInterval = 25f;
     public float maxDistance = 25f;
-    [Header("Effects")]
     public float heartSpikePerSecondOnCollision = 40f;
-    private float sfxTimer;
-    private int spawnIndex;
     void Start()
     {
         if (audioSource == null) audioSource = GetComponent<AudioSource>();
-        audioSource.spatialBlend = 1f;
-        audioSource.playOnAwake = false;
-        audioSource.loop = false;
-        if (waypoints.Length > 0)
+
+        audioSource.loop = true;
+        audioSource.playOnAwake = true;
+        audioSource.volume = 0f;
+        if (spawnpoints.Length > 0)
         {
-            spawnIndex = Random.Range(0, waypoints.Length);
-            Vector3 spawnPos = waypoints[spawnIndex].position;
+            int spawnIndex = Random.Range(0, spawnpoints.Length);
+            Vector3 spawnPos = spawnpoints[spawnIndex].position;
             spawnPos.y = groundY;
             transform.position = spawnPos;
-            Debug.Log($"Paranoia spawned at random Waypoint {spawnIndex} (Y=11)");
         }
-        sfxTimer = sfxInterval;
     }
     void Update()
     {
         if (player == null) return;
-
         ChasePlayer();
         UpdateSoundVolume();
-        PlaySFXTimer();
     }
     void ChasePlayer()
     {
@@ -52,21 +41,9 @@ public class Paranoia : MonoBehaviour
     {
         float distance = Vector3.Distance(transform.position, player.position);
         float closeness = 1f - Mathf.Clamp01(distance / maxDistance);
-        audioSource.volume = closeness * 1.2f;
+        audioSource.volume = Mathf.Lerp(0.05f, 1.2f, closeness);
     }
-    void PlaySFXTimer()
-    {
-        sfxTimer -= Time.deltaTime;
-        if (sfxTimer <= 0f)
-        {
-            if (paranoiaSFX != null)
-            {
-                audioSource.PlayOneShot(paranoiaSFX);
-                Debug.Log("Paranoia SFX played!");
-            }
-            sfxTimer = sfxInterval;
-        }
-    }
+
     void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player") && hrManager != null)

@@ -2,7 +2,6 @@
 using UnityEngine.UI;
 public class Manager : MonoBehaviour
 {
-    [Header("Heart Rate Bar")]
     public Image fillImage;
     public float baseRate = 80f;
     public float maxRate = 180f;
@@ -15,11 +14,9 @@ public class Manager : MonoBehaviour
 
         if (fillImage == null)
         {
-            Debug.LogError("Manager: Fill Image is NULL! Drag the 'Fill' child into the slot below.");
             return;
         }
         UpdateBarVisual();
-        Debug.Log("Manager started - bar ready");
     }
     void Update()
     {
@@ -27,7 +24,6 @@ public class Manager : MonoBehaviour
 
         if (!inDangerZone)
             currentRate = Mathf.Lerp(currentRate, baseRate, decaySpeed * Time.deltaTime);
-
         UpdateBarVisual();
     }
     void UpdateBarVisual()
@@ -42,7 +38,6 @@ public class Manager : MonoBehaviour
         currentRate = Mathf.Min(currentRate + amount, maxRate);
         inDangerZone = true;
     }
-
     public void ExitDangerZone()
     {
         inDangerZone = false;
