@@ -146,8 +146,6 @@ MonoBehaviour:
   moveSpeed: 2
   groundY: 11
   audioSource: {fileID: 12326175}
-  paranoiaSFX: {fileID: 8300000, guid: 094710eaf714a414082e6c535c7e27df, type: 3}
-  sfxInterval: 10
   maxDistance: 25
   heartSpikePerSecondOnCollision: 40
 --- !u!54 &12326172
@@ -2877,7 +2875,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!65 &1386741610
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2961,7 +2959,7 @@ Transform:
   m_GameObject: {fileID: 1386741609}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 205.2527, y: 18.7, z: -193.1426}
+  m_LocalPosition: {x: 205.2527, y: 19.3, z: -193.1426}
   m_LocalScale: {x: 249.38283, y: 157.57994, z: 2.4889033}
   m_ConstrainProportionsScale: 0
   m_Children: []
