@@ -1,4 +1,5 @@
 using UnityEngine;
+
 public class StressZone : MonoBehaviour
 {
     public float maxRadius = 8f;
@@ -6,6 +7,7 @@ public class StressZone : MonoBehaviour
     public float falloffCurve = 2f;
     public LayerMask wallLayer;
     private UManager playerManager;
+
     void OnTriggerStay(Collider other)
     {
         if (!other.CompareTag("Player")) return;
@@ -19,6 +21,7 @@ public class StressZone : MonoBehaviour
         float spike = closeness * maxSpikePerSecond * Time.deltaTime;
         playerManager.IncreaseRate(spike);
     }
+
     void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player") && playerManager != null)
