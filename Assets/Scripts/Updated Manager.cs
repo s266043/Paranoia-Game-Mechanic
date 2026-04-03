@@ -6,13 +6,13 @@ public class UManager : MonoBehaviour
 {
     public float baseRate = 80f;
     public float maxRate = 180f;
-    public float maxSpikePerSecond = 22f;
+    public float maxSpikePerSecond = 15f;
     public float decaySpeed = 3f;
     public float minimumFill = 0.12f;
     public Image fillImage;
     public Image backgroundImage;
     public TextMeshProUGUI bpmText;
-    public Image RedGlow;
+    public Image[] redGlows;
     public float glowIntensity = 0.35f;
     public AudioSource heartbeatSource;
     public float minVolume = 0.3f;
@@ -33,8 +33,11 @@ public class UManager : MonoBehaviour
             heartbeatSource.Play();
         }
 
-        if (RedGlow != null)
-            RedGlow.color = new Color(1, 0, 0, 0);
+        foreach (Image glow in redGlows)
+        {
+            if (glow != null)
+                glow.color = new Color(1, 0, 0, 0);
+        }
     }
 
     void Update()
@@ -61,16 +64,26 @@ public class UManager : MonoBehaviour
 
     void UpdateGlow()
     {
-        if (RedGlow == null) return;
+        if (redGlows == null || redGlows.Length == 0) return;
+
         if (inZone)
         {
             float pulse = Mathf.Sin(Time.time * 8f) * 0.5f + 0.5f;
             float alpha = pulse * glowIntensity;
-            RedGlow.color = new Color(1f, 0.15f, 0.15f, alpha);
+
+            foreach (Image glow in redGlows)
+            {
+                if (glow != null)
+                    glow.color = new Color(1f, 0.15f, 0.15f, alpha);
+            }
         }
         else
         {
-            RedGlow.color = Color.Lerp(RedGlow.color, new Color(1, 0, 0, 0), Time.deltaTime * 6f);
+            foreach (Image glow in redGlows)
+            {
+                if (glow != null)
+                    glow.color = Color.Lerp(glow.color, new Color(1, 0, 0, 0), Time.deltaTime * 5f);
+            }
         }
     }
 
