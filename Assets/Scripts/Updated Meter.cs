@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class StressZone : MonoBehaviour
+public class UMeter : MonoBehaviour
 {
     public float maxRadius = 8f;
-    public float maxSpikePerSecond = 45f;
+    public float maxSpikePerSecond = 15f;
     public float falloffCurve = 2f;
     public LayerMask wallLayer;
     private UManager playerManager;
